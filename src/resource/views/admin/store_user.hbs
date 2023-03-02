@@ -1,0 +1,62 @@
+<div class="container">
+  <form class="mt-4" name="container-form" method="post">
+
+    <table class="table mt-4">
+        <thead>
+            <th>ID</th>
+            <th>Name Product</th>
+            <th>price</th>
+            {{!-- <th>Số lượng</th> --}}
+        </thead>
+        <tbody>
+          {{#each user}}
+            <tr>
+                <th scope="row">{{this._id}}</th>
+                <td>{{this.username}}</td>
+                {{!-- <td>{{this.price}}</td> --}}
+                <td>
+                    <a href="/admin/user/{{this._id}}/edit" class="btn bnt-link">sửa</a>
+                    <a href=" " class="btn btn-link" data-bs-toggle="modal" data-id="{{this._id}}" data-bs-target="#delete-user-modal">Xóa</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</form>
+
+<div id="delete-user-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xóa sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc xóa sản phẩm này</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+        <button id="btn-delete-user" type="button" class="btn btn-primary">Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form  method="post" name="delete-user-form">
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    var deleteForm = document.forms['delete-user-form']
+    var btnDeleteProduct = document.getElementById('btn-delete-user')
+    $('#delete-user-modal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) 
+        userId = button.data('id')
+  });
+  btnDeleteProduct.onclick = function () {
+        alert("Xóa thành công");
+        deleteForm.action = '/admin/user/' + userId + '?_method=DELETE'
+        deleteForm.submit(); 
+  }
+  })
+</script>
+
+</div>
